@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS image_transport roscpp std_msgs std_srvs
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(avcodec libavcodec REQUIRED)
 pkg_check_modules(swscale libswscale REQUIRED)
+pkg_check_modules(avutil libavutil REQUIRED)
 
 ###################################################
 ## Declare things to be passed to other projects ##
@@ -38,6 +39,7 @@ add_library(${PROJECT_NAME} src/usb_cam.cpp)
 target_link_libraries(${PROJECT_NAME}
   ${avcodec_LIBRARIES}
   ${swscale_LIBRARIES}
+  ${avutil_LIBRARIES}
   ${catkin_LIBRARIES}
 )
 
@@ -47,6 +49,7 @@ target_link_libraries(${PROJECT_NAME}_node
   ${PROJECT_NAME}
   ${avcodec_LIBRARIES}
   ${swscale_LIBRARIES}
+  ${avutil_LIBRARIES}
   ${catkin_LIBRARIES}
 )
 
