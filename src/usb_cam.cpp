@@ -775,7 +775,7 @@ void UsbCam::init_mmap(void)
 
   CLEAR(req);
 
-  req.count = 4;
+  req.count = 2;
   req.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
   req.memory = V4L2_MEMORY_MMAP;
 
