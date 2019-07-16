@@ -60,17 +60,16 @@ namespace usb_cam {
 
 void monotonicToRealTime(const timespec& monotonic_time, timespec& real_time)
 {
-  struct timespec real_sample1, real_sample2, monotonic_sample;
+  struct timespec real_sample, monotonic_sample;
 
   // TODO(lucasw) Disable interrupts here?
   // otherwise what if there is a delay/interruption between sampling the times?
-  clock_gettime(CLOCK_REALTIME, &real_sample1);
   clock_gettime(CLOCK_MONOTONIC, &monotonic_sample);
-  clock_gettime(CLOCK_REALTIME, &real_sample2);
+  clock_gettime(CLOCK_REALTIME, &real_sample);
 
   timespec time_diff;
-  time_diff.tv_sec = real_sample2.tv_sec - monotonic_sample.tv_sec;
-  time_diff.tv_nsec = real_sample2.tv_nsec - monotonic_sample.tv_nsec;
+  time_diff.tv_sec = real_sample.tv_sec - monotonic_sample.tv_sec;
+  time_diff.tv_nsec = real_sample.tv_nsec - monotonic_sample.tv_nsec;
 
   // This isn't available outside of the kernel
   // real_time = timespec_add(monotonic_time, time_diff);
