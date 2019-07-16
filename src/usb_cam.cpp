@@ -524,6 +524,9 @@ int UsbCam::read_frame()
 
   switch (io_)
   {
+    case IO_METHOD_UNKNOWN:
+      errno_exit("read frame: IO_METHOD_UNKNOWN");
+      break;
     case IO_METHOD_READ:
       len = read(fd_, buffers_[0].start, buffers_[0].length);
       if (len == -1)
@@ -652,6 +655,9 @@ void UsbCam::stop_capturing(void)
 
   switch (io_)
   {
+    case IO_METHOD_UNKNOWN:
+      errno_exit("stop capturing: IO_METHOD_UNKNOWN");
+      break;
     case IO_METHOD_READ:
       /* Nothing to do. */
       break;
@@ -677,6 +683,9 @@ void UsbCam::start_capturing(void)
 
   switch (io_)
   {
+    case IO_METHOD_UNKNOWN:
+      errno_exit("stop capturing: IO_METHOD_UNKNOWN");
+      break;
     case IO_METHOD_READ:
       /* Nothing to do. */
       break;
@@ -736,6 +745,9 @@ void UsbCam::uninit_device(void)
 
   switch (io_)
   {
+    case IO_METHOD_UNKNOWN:
+      errno_exit("uninit device: IO_METHOD_UNKNOWN");
+      break;
     case IO_METHOD_READ:
       free(buffers_[0].start);
       break;
@@ -913,6 +925,9 @@ void UsbCam::init_device(int image_width, int image_height, int framerate)
 
   switch (io_)
   {
+    case IO_METHOD_UNKNOWN:
+      errno_exit("init device: IO_METHOD_UNKNOWN");
+      break;
     case IO_METHOD_READ:
       if (!(cap.capabilities & V4L2_CAP_READWRITE))
       {
@@ -1009,6 +1024,9 @@ void UsbCam::init_device(int image_width, int image_height, int framerate)
 
   switch (io_)
   {
+    case IO_METHOD_UNKNOWN:
+      errno_exit("init device: IO_METHOD_UNKNOWN");
+      break;
     case IO_METHOD_READ:
       init_read(fmt.fmt.pix.sizeimage);
       break;
