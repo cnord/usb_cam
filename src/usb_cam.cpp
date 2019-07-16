@@ -571,6 +571,13 @@ int UsbCam::read_frame()
         }
       }
 
+      switch (buf.flags & V4L2_BUF_FLAG_TIMESTAMP_MASK) {
+      case V4L2_BUF_FLAG_TIMESTAMP_COPY:
+      case V4L2_BUF_FLAG_TIMESTAMP_UNKNOWN:
+          ROS_ERROR("Unexpected v4l buffer timestamp mask. Should be monotonic.");
+          exit(EXIT_FAILURE);
+      }
+
       // need to get buf time here otherwise process_image will zero it
       TIMEVAL_TO_TIMESPEC(&buf.timestamp, &buf_time);
       monotonicToRealTime(buf_time, real_time);
