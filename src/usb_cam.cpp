@@ -637,9 +637,6 @@ int UsbCam::read_frame()
 
       image_->stamp = stamp;
       break;
-    case IO_METHOD_UNKNOWN:
-      errno_exit("io method is unknown");
-      break;
   }
 
   return 1;
@@ -672,9 +669,6 @@ void UsbCam::stop_capturing(void)
       if (-1 == xioctl(fd_, VIDIOC_STREAMOFF, &type))
         errno_exit("VIDIOC_STREAMOFF");
 
-      break;
-    case IO_METHOD_UNKNOWN:
-      errno_exit("io method is unknown");
       break;
   }
 }
@@ -741,9 +735,6 @@ void UsbCam::start_capturing(void)
         errno_exit("VIDIOC_STREAMON");
 
       break;
-    case IO_METHOD_UNKNOWN:
-      errno_exit("io method is unknown");
-      break;
   }
   is_capturing_ = true;
 }
@@ -770,9 +761,6 @@ void UsbCam::uninit_device(void)
     case IO_METHOD_USERPTR:
       for (i = 0; i < n_buffers_; ++i)
         free(buffers_[i].start);
-      break;
-    case IO_METHOD_UNKNOWN:
-      errno_exit("io method is unknown");
       break;
   }
 
@@ -958,9 +946,6 @@ void UsbCam::init_device(int image_width, int image_height, int framerate)
       }
 
       break;
-    case IO_METHOD_UNKNOWN:
-      errno_exit("io method is unknown");
-      break;
   }
 
   /* Select video input, video standard and tune here. */
@@ -1052,9 +1037,6 @@ void UsbCam::init_device(int image_width, int image_height, int framerate)
 
     case IO_METHOD_USERPTR:
       init_userp(fmt.fmt.pix.sizeimage);
-      break;
-  case IO_METHOD_UNKNOWN:
-      errno_exit("io method is unknown");
       break;
   }
 }
